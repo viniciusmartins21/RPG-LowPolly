@@ -5,69 +5,111 @@ using UnityEngine;
 public class MovementPlayer : MonoBehaviour
 {
     public float speed;
-    public float gravityForce = -9f;
-    public float _gravity;
+    //public float gravityForce = -9f;
+    public float _gravity,
+        jumpForce,
+        fallVelocity;
     Animator _anim;
     CharacterController controller;
-    Vector3 moveDirection;
+    Vector3 moveDirection, yVelocity;
+    
     
 
     void Start()
     {
         _anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+
     }
 
 
 
     void Update()
     {
-        //Inputs
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        float jump = Input.GetAxis("Jump");
 
+        Move();
 
+        //setGravity();
+
+        //Jump();
+
+    }
+
+    public void Move ()
+    {
         //movimento
         if (controller.isGrounded)
         {
-            moveDirection = new Vector3(horizontal, jump, vertical);
-            //moveDirection = transform.TransformDirection(moveDirection);
-            //moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
+            //Inputs
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            bool jump = Input.GetButtonDown("Jump");
+
+
+            moveDirection = new Vector3(horizontal, 0, vertical);
+            moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
+            controller.Move(moveDirection * speed * Time.deltaTime);
+
+
         }
 
 
         if (moveDirection != Vector3.zero)
         {
             _anim.SetBool("isMoving", true);
-        } 
+        }
         else
         {
             _anim.SetBool("isMoving", false);
         }
+
     }
+
+    
+
+    
 
 
     //Função usada para trabalhar com a fisica, roda a cada 0.2 segundos
     void FixedUpdate()
-    { 
-        controller.Move((moveDirection * speed * Time.deltaTime));
+    {
+        
+            if (controller.isGrounded)
+            {
+                fallVelocity = -_gravity * Time.deltaTime;
+                moveDirection.y = fallVelocity;
+            }
+            else
+            {
+                fallVelocity -= _gravity * Time.deltaTime;
+                moveDirection.y = fallVelocity;
+            }
 
-
-        //gravidade
-        if (Input.GetKeyDown("Jump"))
-        {
-            moveDirection.y -= gravityForce * Time.deltaTime;
-        }
         
 
-        //if (controller.isGrounded && _gravity.y < 0) _gravity.y = 0;
+            if (controller.isGrounded && Input.GetButtonDown("Jump"))
+            {
+                fallVelocity = jumpForce;
+                moveDirection.y = fallVelocity;
+            }
+        
+
+        /*
+        if (controller.isGrounded)
+        {
+            fallVelocity = -_gravity * Time.deltaTime;
+            moveDirection.y = fallVelocity;
+        }
+        else
+        {
+            fallVelocity -= _gravity * Time.deltaTime;
+            moveDirection.y = fallVelocity;
+        }
+        */
 
 
-        //_gravity.y += Time.deltaTime * gravityForce;
 
 
-        //transform.Translate(moveDirection *  speed * Time.deltaTime);
 
     }
 }

@@ -19309,7 +19309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0603aeb21782bc0459b677d3effeb6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 5
+  _gravity: 15
+  jumpForce: 8
+  fallVelocity: -10
 --- !u!1001 &920996280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20601,8 +20604,8 @@ Transform:
   - {fileID: 1434948472}
   - {fileID: 1121293705}
   - {fileID: 1632575166}
-  - {fileID: 1955977794}
   - {fileID: 677416359}
+  - {fileID: 1955977794}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43844,16 +43847,33 @@ GameObject:
   m_Component:
   - component: {fileID: 4285353205961299522}
   - component: {fileID: 4285353205970422720}
-  - component: {fileID: 4687665582708194957}
   - component: {fileID: 3970146729280437182}
-  - component: {fileID: 6564017921269993392}
+  - component: {fileID: 4285353205960898683}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
+--- !u!143 &4285353205960898683
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285353205960898682}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4285353205960938494
 GameObject:
   m_ObjectHideFlags: 0
@@ -46038,22 +46058,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &4687665582708194957
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4285353205960898682}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!23 &6458167473400424306
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -48105,17 +48109,3 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000000059604645, y: 0.86255753, z: -0.042129338}
     m_Extent: {x: 1.0245597, y: 0.96365094, z: 0.31380966}
   m_DirtyAABB: 0
---- !u!136 &6564017921269993392
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4285353205960898682}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 1.78
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.88, z: 0}
